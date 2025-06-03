@@ -1,16 +1,17 @@
 import Part from '../src/Part';
 
 const Content = (props) => {
+    console.log(props)
     return (
         <>
             <p>
-                <Part part={props.part1} exercise={props.exercises1} />
+                <Part part={props.part1.name} exercise={props.part1.exercises} />
             </p>
             <p>
-                <Part part={props.part2} exercise={props.exercises2} />
+                <Part part={props.part2.name} exercise={props.part2.exercises} />
             </p>
             <p>
-                <Part part={props.part3} exercise={props.exercises3} />
+                <Part part={props.part3.name} exercise={props.part3.exercises} />
             </p>
         </>
     );
