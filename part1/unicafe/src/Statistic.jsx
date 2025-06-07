@@ -1,6 +1,6 @@
 import Display from "./Display";
 
-const Statistic = ({good, bad, neutral}) => {
+const Statistic = ({ good, bad, neutral }) => {
     const sumAll = () => { return good + bad + neutral };
     const calculateAverage = () => { return sumAll() / 3 };
     const calculateGoodPercent = () => {
@@ -9,6 +9,11 @@ const Statistic = ({good, bad, neutral}) => {
         }
         return ((good / sumAll()) * 100)
     };
+    if (good == 0 && bad == 0 && neutral == 0) {
+        return(
+            <Display text={'No feedback given.'}/>
+        )
+    }
     return (
         <>
             <Display text='good' value={good} />
