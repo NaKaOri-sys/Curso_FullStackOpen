@@ -1,4 +1,5 @@
 import Display from "./Display";
+import StatisticLine from "./StatisticLine";
 
 const Statistic = ({ good, bad, neutral }) => {
     const sumAll = () => { return good + bad + neutral };
@@ -16,12 +17,12 @@ const Statistic = ({ good, bad, neutral }) => {
     }
     return (
         <>
-            <Display text='good' value={good} />
-            <Display text='bad' value={bad} />
-            <Display text='neutral' value={neutral} />
-            <Display text='all' value={sumAll()} />
-            <Display text='average' value={calculateAverage()} />
-            <Display text='positive' value={calculateGoodPercent() + ' %'} />
+            <StatisticLine text='good' value={good} />
+            <StatisticLine text='bad' value={bad} />
+            <StatisticLine text='neutral' value={neutral} />
+            <StatisticLine text='all' value={sumAll()} />
+            <StatisticLine text='average' value={calculateAverage()} />
+            <StatisticLine text='positive' value={calculateGoodPercent() + ' %'} />
         </>
     )
 }
