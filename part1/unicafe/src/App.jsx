@@ -18,9 +18,9 @@ function App() {
       <Button handleClick={handleBadCount} text='bad'/>
       <Button handleClick={handleNeutralCount} text='neutral'/>
       <h2>statistics</h2>
-      <Display text='good' value={goodCount}/>
-      <Display text='bad' value={badCount}/>
-      <Display text='neutral' value={neutralCount}/>
+      <Display text='good' value={good}/>
+      <Display text='bad' value={bad}/>
+      <Display text='neutral' value={neutral}/>
     </>
   )
 }
