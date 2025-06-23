@@ -20,9 +20,22 @@ function App() {
     updatedVotes[selected]+=1;
     updateVotes(updatedVotes);
   };
+  const mostVotesAnecdote = () => {
+    const result = {anecdote: 'Actually, there are no votes.', votes: 0};
+    updatedVotes.forEach((vote, i)=>{
+      if (result.votes < vote) {
+        result.votes = vote;
+        result.anecdote = anecdotes[i];
+      }
+    });
+    return result;
+  };
+  console.log(mostVotesAnecdote().anecdote);
+
   return (
     <>
       <div>
+        <h1>Anecdote of the day</h1>
         {anecdotes[selected]}
       </div>
        <div>
@@ -31,6 +44,11 @@ function App() {
       <div>
         <button onClick={getRandomAnecdote}>next anecdotes</button>
         <button onClick={updateVoteAnecdotes}>vote anecdote</button>
+      </div>
+      <div>
+        <h1>Anecdote with most votes</h1>
+        <p>{mostVotesAnecdote().anecdote}</p>
+        <p>{mostVotesAnecdote().votes == 0 ? '' : `has ${mostVotesAnecdote().votes} votes.`}</p>
       </div>
     </>
   )
