@@ -15,6 +15,13 @@ const App = () => {
       name: newName,
       id: persons.length+1
     }
+    console.log('per ', newName);
+    if (persons.find((p) => (p.name == newName))) {
+      console.log('llegue');
+      
+      alert(`${newName} is already added to phonebook.`);
+      return;
+    }
     setPersons(persons.concat(objPerson))
   };
 
