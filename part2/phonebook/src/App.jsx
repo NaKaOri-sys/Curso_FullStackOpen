@@ -5,20 +5,22 @@ const App = () => {
     { name: 'Arto Hellas' }
   ]);
   const [newName, setNewName] = useState('');
+  const [newNumber, setNewNumber] = useState('');
   const handleCreatePerson = (event) => {
     setNewName(event.target.value);
+  };
+  const handleCreateNumber = (event) => {
+    setNewNumber(event.target.value);
   };
 
   const addPerson = (event) => {
     event.preventDefault();
     const objPerson = {
       name: newName,
+      number: newNumber,
       id: persons.length+1
-    }
-    console.log('per ', newName);
+    };
     if (persons.find((p) => (p.name == newName))) {
-      console.log('llegue');
-      
       alert(`${newName} is already added to phonebook.`);
       return;
     }
@@ -33,11 +35,14 @@ const App = () => {
           name: <input onChange={handleCreatePerson}/>
         </div>
         <div>
+          number: <input onChange={handleCreateNumber}/>
+        </div>
+        <div>
           <button type="submit">add</button>
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map((p) => <p key={p.id ?? 1}>{p.name}</p>)}
+      {persons.map((p) => <p key={p.id ?? 1}>{p.name} {p.number}</p>)}
     </div>
   )
 }
