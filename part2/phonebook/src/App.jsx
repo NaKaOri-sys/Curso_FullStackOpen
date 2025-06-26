@@ -2,7 +2,10 @@ import { useState } from 'react'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
   ]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
@@ -12,7 +15,11 @@ const App = () => {
   const handleCreateNumber = (event) => {
     setNewNumber(event.target.value);
   };
-
+  const handleFilterNumbers = (event) =>{
+    let val = event.target.value;  
+    const filteredNumbers = persons.filter((p) => (p.name.toLocaleLowerCase().includes(val)));
+    setPersons(filteredNumbers);
+  };
   const addPerson = (event) => {
     event.preventDefault();
     const objPerson = {
@@ -30,6 +37,10 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>
+        filter shown with<input onChange={handleFilterNumbers}/>
+      </div>
+      <h2>add a new</h2>
       <form onSubmit={addPerson}>
         <div>
           name: <input onChange={handleCreatePerson}/>
