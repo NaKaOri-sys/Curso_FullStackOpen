@@ -1,9 +1,13 @@
 import PersonLine from "./PersonLine";
 
-const Persons = ({ persons }) => {
+const Persons = ({ persons, handleDeletePerson }) => {
     return (
         <>
-            {persons.map((p) => <PersonLine key={p.id ?? 1}  name={p.name} number={p.number}/>)}
+            {persons.map((p) =>
+                <div key={p.id ?? 1}>
+                    <PersonLine name={p.name} number={p.number} handleDeletePerson={() => handleDeletePerson.deletePerson(p.id)}/>
+                </div>
+            )}
         </>
     );
 }
