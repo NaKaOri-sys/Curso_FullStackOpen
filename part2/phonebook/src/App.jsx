@@ -29,12 +29,19 @@ const App = () => {
   };
   const addPerson = (event) => {
     event.preventDefault();
+    const textUpdateNumber = `${newName} is already added to phonebook, replace the old number with a new one?`;
+    const filteredPersonByName = persons.find((p) => (p.name == newName));
     const objPerson = {
       name: newName,
       number: newNumber
     };
-    if (persons.find((p) => (p.name == newName))) {
-      alert(`${newName} is already added to phonebook.`);
+    if (filteredPersonByName && window.confirm(textUpdateNumber)) {
+      personService.update(filteredPersonByName.id, objPerson)
+        .then((res) => {
+          setPersons(persons.map(p => p.id === res.id ? res : p));
+          console.log('Update successful', persons);
+        })
+        .catch((res) => console.error('error when updating number.', res));
       return;
     }
     personService.post(objPerson).then(res => {
@@ -45,6 +52,7 @@ const App = () => {
     const person = persons.find(p => p.id === id);
     if (window.confirm(`Delete ${person.name}`)) {
       personService.deleteHttp(id).then(res => {
+        setPersons(persons.filter(p => p.id !== id));
         console.log('Delete successful: ', res);
       }).catch(res => {
         alert('No person is registered with the given request ID.')
