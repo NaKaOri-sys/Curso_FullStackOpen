@@ -3,11 +3,14 @@ import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import Filter from './components/Filter';
 import personService from './services/persons';
+import Notification from './components/Notification';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
+  const [notificationMessage, setNotificationMessage] = useState('');
+  const [isErrorNotification, toggleNotificationStyle] = useState(true)
   const hook = () => {
     personService
       .getAll()
@@ -36,17 +39,41 @@ const App = () => {
       number: newNumber
     };
     if (filteredPersonByName && window.confirm(textUpdateNumber)) {
-      personService.update(filteredPersonByName.id, objPerson)
+      const objModified = {...filteredPersonByName, number: newNumber};
+      personService.update(filteredPersonByName.id, objModified)
         .then((res) => {
           setPersons(persons.map(p => p.id === res.id ? res : p));
           console.log('Update successful', persons);
+          setNotificationMessage(`Updated ${res.name}`);
+          toggleNotificationStyle(false);
+          setTimeout(() => {
+            setNotificationMessage(null);
+          }, 5000);
         })
-        .catch((res) => console.error('error when updating number.', res));
+        .catch((res) => {
+          console.error('error when updating number.', res)
+          setNotificationMessage(`Error when updating ${res.name}`);
+          toggleNotificationStyle(true);
+          setTimeout(() => {
+            setNotificationMessage(null);
+          }, 5000);
+        });
       return;
     }
     personService.post(objPerson).then(res => {
-      setPersons(persons.concat(res))
-    })
+      setPersons(persons.concat(res));
+      setNotificationMessage(`Added ${res.name}`);
+      toggleNotificationStyle(false);
+      setTimeout(() => {
+        setNotificationMessage(null);
+      }, 5000);
+    }).catch(res => {
+      setNotificationMessage(`Error when create ${res.name}`);
+      toggleNotificationStyle(true);
+      setTimeout(() => {
+        setNotificationMessage(null);
+      }, 5000);
+    });
   };
   const deletePerson = (id) => {
     const person = persons.find(p => p.id === id);
@@ -56,6 +83,11 @@ const App = () => {
         console.log('Delete successful: ', res);
       }).catch(res => {
         alert('No person is registered with the given request ID.')
+        setNotificationMessage(`Error when delete ${res.name}`);
+        toggleNotificationStyle(true);
+        setTimeout(() => {
+          setNotificationMessage(null);
+        }, 5000);
       });
     }
   };
@@ -68,6 +100,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notificationMessage} isError={isErrorNotification} />
       <Filter handleFilterNumbers={handleFilterNumbers} />
       <h2>add a new</h2>
       <PersonForm person={handleEventsForm} />
