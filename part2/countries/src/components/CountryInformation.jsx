@@ -7,6 +7,7 @@ const CountryInformation = ({ country }) => {
             <div>
                 <h1>{country.name.common}</h1>
                 <p>Capital {country.capital}</p>
+                <p>Area {country.area}</p>
             </div>
             <div>
                 <h2>Languages</h2>
