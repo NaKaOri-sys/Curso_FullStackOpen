@@ -52,7 +52,7 @@ const App = () => {
         })
         .catch((res) => {
           console.error('error when updating number.', res)
-          setNotificationMessage(`Error when updating ${res.name}`);
+          setNotificationMessage(`Information of ${newName} has already been removed from server`);
           toggleNotificationStyle(true);
           setTimeout(() => {
             setNotificationMessage(null);
@@ -81,9 +81,14 @@ const App = () => {
       personService.deleteHttp(id).then(res => {
         setPersons(persons.filter(p => p.id !== id));
         console.log('Delete successful: ', res);
+        setNotificationMessage(`Delete ${res.name}`);
+          toggleNotificationStyle(false);
+          setTimeout(() => {
+            setNotificationMessage(null);
+          }, 5000);
       }).catch(res => {
         alert('No person is registered with the given request ID.')
-        setNotificationMessage(`Error when delete ${res.name}`);
+        setNotificationMessage(`Information of ${newName} has already been removed from server`);
         toggleNotificationStyle(true);
         setTimeout(() => {
           setNotificationMessage(null);
