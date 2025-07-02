@@ -17,6 +17,11 @@ function App() {
       setCountries(res);
     })
   }, []);
+  const getCountryByName = (name) => {
+    countriesService.get(name).then(res => {
+      setNewCountry(res);
+    });
+  };
   const handleChangeCountry = (event) => {
     let countryName = event.target.value;
     if (!countryName) {
@@ -34,10 +39,12 @@ function App() {
       return;
     }
     if (filteredCountries.length === 1) {
-      countriesService.get(filteredCountries.map(c => c.name.common)).then(res => {
-        setNewCountry(res);
-      });
+      getCountryByName(filteredCountries.map(c => c.name.common));
     }
+  };
+  const handleClickShowCountry = (name) =>{
+    cleanState();
+    getCountryByName(name);
   };
   return (
     <>
@@ -46,7 +53,12 @@ function App() {
       </div>
       <div>
         {message}
-        {matchesCountries.map(country => <p key={country.cca2}>{country.name.common}</p>)}
+        {matchesCountries.map(country => (
+          <div key={country.cca2} style={{ display: 'flex', alignItems: 'center'}}>
+            <p style={{ margin: '0 5px 0 0' }}>{country.name.common}</p>
+            <button onClick={() => handleClickShowCountry(country.name.common)}>Show</button>
+          </div>
+        ))}
       </div>
       <CountryInformation country={newCountry} />
     </>
