@@ -68,7 +68,7 @@ const App = () => {
         setNotificationMessage(null);
       }, 5000);
     }).catch(res => {
-      setNotificationMessage(`Error when create ${res.name}`);
+      setNotificationMessage(`${res.response.data.error}`);
       toggleNotificationStyle(true);
       setTimeout(() => {
         setNotificationMessage(null);
