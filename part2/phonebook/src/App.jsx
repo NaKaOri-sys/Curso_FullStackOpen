@@ -52,7 +52,7 @@ const App = () => {
         })
         .catch((res) => {
           console.error('error when updating number.', res)
-          setNotificationMessage(`Information of ${newName} has already been removed from server`);
+          setNotificationMessage(`${res.response.data.error}`);
           toggleNotificationStyle(true);
           setTimeout(() => {
             setNotificationMessage(null);
